@@ -103,6 +103,21 @@ buf ->
 
 If you want to save a block to a file:
 
+saveBlock(Index: number, buf: buffer)
+  * The first parameter is the index at which to start writing
+  * The buffer is what you are writing
+
+NOTICE:
+If you have multiple files, it will automatically write to the next file if the buffer is too large for the first.
+
+``` typescript
+
+let y = new Buffer(4000);
+let x = tph.saveBlock(255572, y);
+
+// x -> true
+```
+
 ## ISC License (Open Source Initiative)
 
 ISC License (ISC)
