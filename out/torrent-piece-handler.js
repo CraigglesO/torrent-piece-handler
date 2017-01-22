@@ -72,7 +72,7 @@ class TPH {
                     buf = buf.slice(newBufferLength);
                     index += newBufferLength;
                 }
-                var f = fs_1.openSync('./' + file.path, 'r+');
+                let f = fs_1.openSync("./" + file.path, "r+");
                 try {
                     if (!bufW) {
                         fs_1.writeSync(f, buf, 0, buf.length, offset);

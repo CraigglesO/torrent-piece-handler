@@ -1,33 +1,34 @@
-import { Buffer } from 'buffer';
-import { openSync, writeSync } from 'fs';
+import { Buffer } from "buffer";
+import { openSync, writeSync } from "fs";
 
 interface Files {
-  path:   string
-  name:   string
-  length: number
-  offset: number
+  path:   string;
+  name:   string;
+  length: number;
+  offset: number;
 }
 
-interface returnBuffer {
-  resultBuf: Buffer
-  count:     number
+interface ReturnBuffer {
+  resultBuf: Buffer;
+  count:     number;
 }
 
 const DL_SIZE = 16384; // This is the default allowable download size per request
 const REQUEST = Buffer.from([0x00, 0x00, 0x00, 0x0d, 0x06]);
 
 class TPH {
-  files:         Array<Files>
-  length:        number
-  pieceSize:     number
-  pieceCount:    number
-  lastPieceSize: number
-  parts:         number
-  lastParts:     number
-  leftover:      number
+  files:         Array<Files>;
+  length:        number;
+  pieceSize:     number;
+  pieceCount:    number;
+  lastPieceSize: number;
+  parts:         number;
+  lastParts:     number;
+  leftover:      number;
+
   constructor(files: Array<Files>, length: number, pieceSize: number, pieceCount: number, lastPieceSize: number) {
-    const self = this;
-    self.files         = files
+    const self         = this;
+    self.files         = files;
     self.length        = length;
     self.pieceSize     = pieceSize;
     self.pieceCount    = --pieceCount;
@@ -47,10 +48,10 @@ class TPH {
       count = self.parts;
       for (let i = 0; i < self.parts; i++) {
         let buf = Buffer.from([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00]);
-        buf.writeUInt32BE(pieceNumber, 0) // set the piece position
+        buf.writeUInt32BE(pieceNumber, 0); // set the piece position
         result.push(REQUEST);
         result.push(buf);
-        buf.writeUInt32BE(part,4);        // set the offset inside the piece
+        buf.writeUInt32BE(part, 4);         // set the offset inside the piece
         part += DL_SIZE;
       }
     } else {
@@ -58,17 +59,17 @@ class TPH {
       count = self.lastParts;
       for (let i = 0; i < self.lastParts; i++) {
         let buf = Buffer.from([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00]);
-        buf.writeUInt32BE(pieceNumber, 0) // set the piece position
+        buf.writeUInt32BE(pieceNumber, 0); // set the piece position
         result.push(REQUEST);
         result.push(buf);
-        buf.writeUInt32BE(part,4);        // set the offset inside the piece
+        buf.writeUInt32BE(part, 4);         // set the offset inside the piece
         part += DL_SIZE;
       }
       if (self.leftover) {
         let buf = Buffer.from([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00]);
-        buf.writeUInt32BE(pieceNumber, 0) // (value,offest)
-        buf.writeUInt32BE(part,4);        // set the offset inside the piece
-        buf.writeUInt32BE(self.leftover, 8) // The size is smaller
+        buf.writeUInt32BE(pieceNumber, 0);   // (value,offest)
+        buf.writeUInt32BE(part, 4);           // set the offset inside the piece
+        buf.writeUInt32BE(self.leftover, 8); // The size is smaller
         result.push(REQUEST);
         result.push(buf);
         count++;
@@ -89,7 +90,7 @@ class TPH {
     if (buf.length > self.pieceSize)
       return false;
 
-    //First get which file this index is in:
+    // First get which file this index is in:
     self.files.forEach((file) => {
       // If the buffer fits within the file:
       if ( (file.offset <= index) && (index < (file.offset + file.length)) ) {
@@ -104,7 +105,7 @@ class TPH {
           buf = buf.slice(newBufferLength);
           index += newBufferLength;
         }
-        var f = openSync('./'+file.path, 'r+');
+        let f = openSync("./" + file.path, "r+");
         try {
           if (!bufW) {
             writeSync(f, buf, 0, buf.length, offset);

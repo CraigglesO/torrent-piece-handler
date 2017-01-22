@@ -1,50 +1,50 @@
-import * as fs from 'fs';
-import * as test from 'tape';
-import TPH from '../torrent-piece-handler';
-import { Buffer } from 'buffer';
+import * as fs from "fs";
+import * as test from "tape";
+import TPH from "../torrent-piece-handler";
+import { Buffer } from "buffer";
 
 // Total length of torrent: 962416635
 // Size of each piece:      1048576
 // Number of pieces:        918
 // Last piece size:         872443
 
-const files = [ { path: 'Downloads/lol1/1.png',
-           name: '1.png',
+const files = [ { path: "Downloads/lol1/1.png",
+           name: "1.png",
            length: 255622,
            offset: 0 },
-         { path: 'Downloads/lol2/2.png',
-           name: '2.png',
+         { path: "Downloads/lol2/2.png",
+           name: "2.png",
            length: 1115627,
-           offset: 255622 } ]
+           offset: 255622 } ];
 
 
 
-let one = fs.readFileSync('1.png');
+let one = fs.readFileSync("1.png");
 
-let two = fs.readFileSync('2.png');
+let two = fs.readFileSync("2.png");
 
-//PREP:
-fs.writeFileSync('Downloads/lol1/1.png', one);
-fs.writeFileSync('Downloads/lol2/2.png', two);
+// PREP:
+// fs.writeFileSync("Downloads/lol1/1.png", one);
+// fs.writeFileSync("Downloads/lol2/2.png", two);
 
 const tph = new TPH(files, 962416635, 1048576, 918, 872443);
 
-test('Saving files', (t) => {
+test("Saving files", (t) => {
   t.plan(3);
 
-  let r = one
+  let r = one;
   let x = tph.saveBlock(0, r);
-  t.true(x, 'One buffer, two files');
+  t.true(x, "One buffer, two files");
 
   r = one.slice(255572);
   let s = two.slice(0, 30);
-  let result = Buffer.concat([r,s]);
+  let result = Buffer.concat([r, s]);
   x = tph.saveBlock(255572, result);
-  t.true(x, 'One buffer, one file');
+  t.true(x, "One buffer, one file");
 
   r = new Buffer(2048576);
   x = tph.saveBlock(0, r);
-  t.false(x, 'Pass in a buffer too large')
+  t.false(x, "Pass in a buffer too large");
 
   t.end();
 });
