@@ -1,6 +1,6 @@
 # torrent-piece-handler [![travis][travis-image]][travis-url] [![npm][npm-image]][npm-url] [![downloads][downloads-image]][downloads-url]
 
-[travis-image]: https://img.shields.io/travis/oconnorct1/torrent-piece-handler/master.svg
+[travis-image]: https://travis-ci.org/CraigglesO/torrent-piece-handler.svg?branch=master
 [travis-url]: https://travis-ci.org/oconnorct1/torrent-piece-handler
 [npm-image]: https://img.shields.io/npm/v/torrent-piece-handler.svg
 [npm-url]: https://npmjs.org/package/torrent-piece-handler
