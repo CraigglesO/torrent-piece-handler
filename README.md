@@ -1,4 +1,11 @@
-# torrent-piece-handler
+# torrent-piece-handler [![travis][travis-image]][travis-url] [![npm][npm-image]][npm-url] [![downloads][downloads-image]][downloads-url]
+
+[travis-image]: https://img.shields.io/travis/oconnorct1/torrent-piece-handler/master.svg
+[travis-url]: https://travis-ci.org/oconnorct1/torrent-piece-handler
+[npm-image]: https://img.shields.io/npm/v/torrent-piece-handler.svg
+[npm-url]: https://npmjs.org/package/torrent-piece-handler
+[downloads-image]: https://img.shields.io/npm/dm/torrent-piece-handler.svg
+[downloads-url]: https://npmjs.org/package/torrent-piece-handler
 
 ### Torrents have different pieces sizes. This will manage those differences
 

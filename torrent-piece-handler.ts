@@ -86,6 +86,9 @@ class TPH {
   saveBlock(index: number, buf: Buffer): Boolean {
     const self = this;
 
+    if (buf.length > self.pieceSize)
+      return false;
+
     //First get which file this index is in:
     self.files.forEach((file) => {
       // If the buffer fits within the file:

@@ -60,6 +60,8 @@ class TPH {
     }
     saveBlock(index, buf) {
         const self = this;
+        if (buf.length > self.pieceSize)
+            return false;
         self.files.forEach((file) => {
             if ((file.offset <= index) && (index < (file.offset + file.length))) {
                 let offset = index - file.offset;
