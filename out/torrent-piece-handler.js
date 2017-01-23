@@ -61,7 +61,7 @@ class TPH {
             cb(null);
         }
         let pre = buffer_1.Buffer.from([0x00, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x00]);
-        pre.writeUInt32BE(length + 9, 0);
+        pre.writeUInt32BE(length + 5, 0);
         pre.writeUInt16BE(index, 5);
         pre.writeUInt16BE(begin, 7);
         let start = (index * self.pieceSize) + (begin * DL_SIZE);
