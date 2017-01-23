@@ -85,7 +85,7 @@ class TPH {
 
     // piece:   <len=0009+X><id=7><index><begin><block>
     let pre = Buffer.from([0x00, 0x00, 0x00, 0x00, 0x07, 0x00, 0x00, 0x00, 0x00]);
-    pre.writeUInt32BE(length + 9, 0);
+    pre.writeUInt32BE(length + 5, 0);
     pre.writeUInt16BE(index, 5);
     pre.writeUInt16BE(begin, 7);
 
