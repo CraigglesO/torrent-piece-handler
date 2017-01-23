@@ -54,7 +54,13 @@ import TPH from 'torrent-piece-handler';
 
 const tph = new TPH(files, 962416635, 1048576, 918, 872443);
 
+```
 
+prepareRequest(pieceNumber: number, cb: Function)
+  * pieceNumber: which hash piece (e.g. 0,1,2,3,4,...)
+  * cb: Function, returns a buffer and the number of requests bundled in the buffer
+
+``` typescript
 // First piece:
 let r = tph.prepareRequest(0, (buf: Buffer, count: number) => {
 
@@ -107,15 +113,29 @@ buf ->
 
 ```
 
+If you want to read from a file:
+
+prepareUpload(index: number, begin: number, length: number, cb: Function)
+  * index: which hash piece (e.g. 0,1,2,3,4,...)
+  * begin: which part of the piece (e.g. 0,1,2,3,4,...)
+  * length: piece request size: (e.g. 16,384)
+
+  ``` typescript
+
+tph.prepareUpload(16, 0, 16384, (up) => {
+  // up -> Buffer
+})
+  ```
 
 If you want to save a block to a file:
 
-saveBlock(Index: number, buf: buffer)
-  * The first parameter is the index at which to start writing
-  * The buffer is what you are writing
+saveBlock(index: number, buf: buffer)
+  * index: The first parameter is the index at which to start writing
+  * buf: The buffer is what you are writing
 
-NOTICE:
-If you have multiple files, it will automatically write to the next file if the buffer is too large for the first.
+NOTE:
+
+```If you have multiple files, it will automatically write to the next file if the buffer is too large for the first.```
 
 ``` typescript
 
@@ -123,6 +143,7 @@ let y = new Buffer(4000);
 let x = tph.saveBlock(255572, y);
 
 // x -> true
+// false if failed.
 ```
 
 ## ISC License (Open Source Initiative)
