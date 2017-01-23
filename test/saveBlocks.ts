@@ -24,15 +24,15 @@ let one = fs.readFileSync("1.png");
 let two = fs.readFileSync("2.png");
 
 // PREP:
-// fs.writeFileSync("Downloads/lol1/1.png", one);
-// fs.writeFileSync("Downloads/lol2/2.png", two);
+fs.writeFileSync("Downloads/lol1/1.png", one);
+fs.writeFileSync("Downloads/lol2/2.png", two);
 
 const tph = new TPH(files, 962416635, 1048576, 918, 872443);
 
 test("Saving files", (t) => {
   t.plan(3);
 
-  let r = one;
+  let r = one.slice(0,16384);
   let x = tph.saveBlock(0, r);
   t.true(x, "One buffer, two files");
 
