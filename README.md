@@ -18,9 +18,11 @@ Features:
 * Last piece size is handled as well
 * Gives you the number of parts in the piece request so you can track incoming parts.
 * One command is all it takes.
+
 NEW:
 * Save blocks to their proper files
 * Now a callback response when finding new pieces
+* read blocks to upload to another peer
 
 ## Install
 
