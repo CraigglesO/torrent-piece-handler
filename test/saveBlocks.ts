@@ -32,7 +32,7 @@ const tph = new TPH(files, 962416635, 1048576, 918, 872443);
 test("Saving files", (t) => {
   t.plan(3);
 
-  let r = one.slice(0,16384);
+  let r = one.slice(0, 16384);
   let x = tph.saveBlock(0, r);
   t.true(x, "One buffer, two files");
 

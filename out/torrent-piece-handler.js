@@ -70,7 +70,7 @@ class TPH {
         let pieceOffset = 0;
         self.files.forEach((file) => {
             if (start >= file.offset && start < (file.offset + file.length)) {
-                let f = fs_1.openSync(file.path, 'r');
+                let f = fs_1.openSync(file.path, "r");
                 let fileStart = start - file.offset;
                 if ((start + length) < (file.offset + file.length)) {
                     fs_1.readSync(f, piece, pieceOffset, length, fileStart);
@@ -105,7 +105,7 @@ class TPH {
                     buf = buf.slice(newBufferLength);
                     index += newBufferLength;
                 }
-                let f = fs_1.openSync(file.path, 'r+');
+                let f = fs_1.openSync(file.path, "r+");
                 try {
                     if (!bufW) {
                         fs_1.writeSync(f, buf, 0, buf.length, offset);
@@ -115,7 +115,7 @@ class TPH {
                     }
                 }
                 catch (e) {
-                    fs_1.writeFileSync('./debug.txt', 'problem writing...');
+                    fs_1.writeFileSync("./debug.txt", "problem writing...");
                     return false;
                 }
             }

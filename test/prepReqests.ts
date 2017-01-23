@@ -24,7 +24,7 @@ test("Get a prepared block", (t) => {
 
   // 1048576 / 16384 = 64
   let r = tph.prepareRequest(0, (buf: Buffer, count: number) => {
-    t.equal(64, count, 'check the return count');
+    t.equal(64, count, "check the return count");
 
     t.end();
   });
@@ -38,9 +38,9 @@ test("Get a prepared block", (t) => {
 
   // 16384 / 16384 = 1
   let r = tph2.prepareRequest(0, (buf: Buffer, count: number) => {
-    t.equal(1, count, 'check the return count');
+    t.equal(1, count, "check the return count");
 
-    t.equal(buf.toString('hex'), Buffer.from([0x00, 0x00, 0x00, 0x0d, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00]).toString('hex'), 'The buffer is the same');
+    t.equal(buf.toString("hex"), Buffer.from([0x00, 0x00, 0x00, 0x0d, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00]).toString("hex"), "The buffer is the same");
 
     t.end();
   });

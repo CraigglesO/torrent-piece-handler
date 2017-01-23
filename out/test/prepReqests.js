@@ -14,7 +14,7 @@ const tph = new torrent_piece_handler_1.default(files, 962416635, 1048576, 918, 
 test("Get a prepared block", (t) => {
     t.plan(1);
     let r = tph.prepareRequest(0, (buf, count) => {
-        t.equal(64, count, 'check the return count');
+        t.equal(64, count, "check the return count");
         t.end();
     });
 });
@@ -22,8 +22,8 @@ const tph2 = new torrent_piece_handler_1.default(files, 1371249, 16384, 84, 1137
 test("Get a prepared block", (t) => {
     t.plan(2);
     let r = tph2.prepareRequest(0, (buf, count) => {
-        t.equal(1, count, 'check the return count');
-        t.equal(buf.toString('hex'), buffer_1.Buffer.from([0x00, 0x00, 0x00, 0x0d, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00]).toString('hex'), 'The buffer is the same');
+        t.equal(1, count, "check the return count");
+        t.equal(buf.toString("hex"), buffer_1.Buffer.from([0x00, 0x00, 0x00, 0x0d, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40, 0x00]).toString("hex"), "The buffer is the same");
         t.end();
     });
 });
