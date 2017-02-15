@@ -1,11 +1,15 @@
 "use strict";
 const buffer_1 = require("buffer");
 const fs_1 = require("fs");
-const DL_SIZE = 16384;
-const REQUEST = buffer_1.Buffer.from([0x00, 0x00, 0x00, 0x0d, 0x06]);
+const DL_SIZE = 16384, REQUEST = buffer_1.Buffer.from([0x00, 0x00, 0x00, 0x0d, 0x06]), debug = require("debug")("torrent-engine");
 class TPH {
     constructor(files, length, pieceSize, pieceCount, lastPieceSize) {
+        this._debug = (...args) => {
+            args[0] = "[" + this._debugId + "] " + args[0];
+            debug.apply(null, args);
+        };
         const self = this;
+        self._debugId = ~~((Math.random() * 100000) + 1);
         self.files = files;
         self.length = length;
         self.pieceSize = pieceSize;
@@ -14,8 +18,10 @@ class TPH {
         self.parts = pieceSize / DL_SIZE;
         self.lastParts = Math.floor(lastPieceSize / DL_SIZE);
         self.leftover = lastPieceSize % DL_SIZE;
+        self._debug("Torrent-piece-handler created");
     }
     prepareRequest(pieceNumber, cb) {
+        this._debug(`prepareRequest with pieceNumber: ${pieceNumber}`);
         const self = this;
         let result = [];
         let count = 0;
@@ -56,6 +62,7 @@ class TPH {
         cb(resultBuf, count);
     }
     prepareUpload(index, begin, length, cb) {
+        this._debug(`prepareUpload with index: ${index}, begin: ${begin}, length: ${length}`);
         const self = this;
         if ((begin * DL_SIZE) + length > self.length || index > self.pieceCount) {
             cb(null);
@@ -91,6 +98,7 @@ class TPH {
         return num * this.pieceSize;
     }
     saveBlock(index, buf) {
+        this._debug(`Saving block at index: ${index}`);
         const self = this;
         if (buf.length > DL_SIZE) {
             return false;

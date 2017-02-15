@@ -2,7 +2,7 @@
   "name": "torrent-piece-handler",
   "main": "index.d.ts",
   "homepage": "",
-  "version": "3.16.39",
+  "version": "3.20.1",
   "globalDevDependencies": {
     "node": "registry:env/node#6.0.0+20170119204930"
   },

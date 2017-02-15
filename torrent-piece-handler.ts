@@ -8,10 +8,12 @@ interface Files {
   offset: number;
 }
 
-const DL_SIZE = 16384; // This is the default allowable download size per request
-const REQUEST = Buffer.from([0x00, 0x00, 0x00, 0x0d, 0x06]);
+const DL_SIZE = 16384, // This is the default allowable download size per request
+      REQUEST = Buffer.from([0x00, 0x00, 0x00, 0x0d, 0x06]),
+      debug  = require("debug")("torrent-engine");
 
 class TPH {
+  _debugId:      number;
   files:         Array<Files>;
   length:        number;
   pieceSize:     number;
@@ -22,6 +24,8 @@ class TPH {
   leftover:      number;
   constructor(files: Array<Files>, length: number, pieceSize: number, pieceCount: number, lastPieceSize: number) {
     const self = this;
+
+    self._debugId      = ~~((Math.random() * 100000) + 1);
     self.files         = files;
     self.length        = length;
     self.pieceSize     = pieceSize;
@@ -30,9 +34,12 @@ class TPH {
     self.parts         = pieceSize / DL_SIZE;
     self.lastParts     = Math.floor(lastPieceSize / DL_SIZE);
     self.leftover      = lastPieceSize % DL_SIZE;
+
+    self._debug("Torrent-piece-handler created");
   }
 
   prepareRequest(pieceNumber: number, cb: Function) {
+    this._debug(`prepareRequest with pieceNumber: ${pieceNumber}`);
     const self = this;
     let result = [];
     let count  = 0;
@@ -77,6 +84,7 @@ class TPH {
     // index: which hash piece (e.g. 0,1,2,3,4,...)
     // begin: which part of the piece (e.g. 0,1,2,3,4,...)
     // length: piece request size: (e.g. 16,384)
+    this._debug(`prepareUpload with index: ${index}, begin: ${begin}, length: ${length}`);
     const self = this;
     // Check that the input is within the range
     if ( (begin * DL_SIZE) + length > self.length || index > self.pieceCount) {
@@ -126,6 +134,7 @@ class TPH {
 
   // Find the proper file(s) and write:
   saveBlock(index: number, buf: Buffer): Boolean {
+    this._debug(`Saving block at index: ${index}`);
     const self = this;
 
     if (buf.length > DL_SIZE) {
@@ -161,6 +170,11 @@ class TPH {
       }
     });
     return true;
+  }
+
+  _debug = (...args: any[]) => {
+    args[0] = "[" + this._debugId + "] " + args[0];
+    debug.apply(null, args);
   }
 }
 

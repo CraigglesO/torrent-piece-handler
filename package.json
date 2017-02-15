@@ -1,6 +1,6 @@
 {
   "name": "torrent-piece-handler",
-  "version": "3.16.41",
+  "version": "3.20.1",
   "description": "Torrents have different piece and block sizes. This will manage those differences",
   "main": "./out/torrent-piece-handler.js",
   "typings": "torrent-piece-handler",
