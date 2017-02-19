@@ -1,5 +1,7 @@
 # torrent-piece-handler [![travis][travis-image]][travis-url] [![npm][npm-image]][npm-url] [![downloads][downloads-image]][downloads-url]
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/CraigglesO/torrent-piece-handler.svg)](https://greenkeeper.io/)
+
 [travis-image]: https://travis-ci.org/CraigglesO/torrent-piece-handler.svg?branch=master
 [travis-url]: https://travis-ci.org/CraigglesO/torrent-piece-handler
 [npm-image]: https://img.shields.io/npm/v/torrent-piece-handler.svg
